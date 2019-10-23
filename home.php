@@ -1,5 +1,7 @@
 <?php
-session_start();
+    session_start();
+    if ($_SESSION['akseslogin']) {
+        # code...   
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -19,10 +21,17 @@ session_start();
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <div class="navbar-nav mr-auto"></div>
-<!--             <form class="form-inline my-2 my-lg-0">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Logi</button>
-            </form> -->
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="home.php">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="soal_pembelian.php">Toko</a>
+                </li>
+            </ul>
+            <form action="logout.php">
+                <button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Logout</button>
+            </form>
         </div>
     </nav>
     <!-- End Header -->
@@ -31,23 +40,14 @@ session_start();
         <div class="row justify-content-center">
             <div class="col-md-8" style="padding:20px;">
                 <div class="jumbotron">
-                    <h1 class="display-4">Silakan Login!</h1>
-                    <p class="lead">Untuk Mengetahui Info Selengkapnya</p>
+                    <h1 class="display-4">Assalam Store </h1>
+                    <p class="lead"></p>
                     <hr class="my-4">
-                    <form action="" method="post">
-                        <div class="form-group">
-                            <label for="">Email</label>
-                            <input type="email" class="form-control" name="email" value="" id="email" required>
-                            <label for="">Password</label>
-                            <input type="password" class="form-control" name="pass" value="" id="pass" required><br><br>
-                            <button class="btn btn-outline-success my-2 my-sm-0" type="submit" name="Akses">Login</button>
-                        </div>
-                    </form>
+                    <p>Jika anda berminat untuk membeli HP bisa klik tombol toko</p>
                 </div>
             </div>
         </div>
     </div>
-
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="navbar-nav mr-auto"></div>
         <a class="navbar-brand" href="#"></a>
@@ -55,11 +55,7 @@ session_start();
             <span class="navbar-toggler-icon"></span>
         </button>
     </nav>
-    <!-- End Content -->
-
-    <!-- Footer -->
     <!-- End Footer -->
-
     <!-- JS -->
     <!-- Jquery, bebas.js -->
     <script src="assets/js/jquery-3.4.1.min.js"></script>
@@ -69,16 +65,7 @@ session_start();
 </body>
 </html>
 <?php
-    if (isset($_POST['Akses'])) {
-        $a = $_POST['email'];
-        $b = $_POST['pass'];
-        if ($a == "refan@gmail.com" && $b == '882001') {
-            $_SESSION['akseslogin'] = 'Admin';
-            header("location:home.php");
-        }else{
-            echo "Login Gagal";
-        }
-    }elseif (isset($_SESSION['akseslogin'])) {
-         echo "<script> alert('Anda Sudah Login');"." window.location.href='home.php' </script>";
+    }else{
+        echo "<script> alert('Silahkan Login Terlebih dahulu');"." window.location.href='index.php' </script>";
     }
 ?>

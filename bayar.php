@@ -1,5 +1,7 @@
 <?php
-session_start();
+    session_start();
+    if ($_SESSION['akseslogin']) {
+        # code...   
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -14,15 +16,22 @@ session_start();
 <body>
     <!-- Header -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">Assalam Store</a>
+        <a class="navbar-brand" href="#">Assalaam Store</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <div class="navbar-nav mr-auto"></div>
-<!--             <form class="form-inline my-2 my-lg-0">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Logi</button>
-            </form> -->
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="home.php">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="soal_pembelian.php">Toko</a>
+                </li>
+            </ul>
+            <form action="logout.php">
+                <button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Logout</button>
+            </form>
         </div>
     </nav>
     <!-- End Header -->
@@ -31,23 +40,32 @@ session_start();
         <div class="row justify-content-center">
             <div class="col-md-8" style="padding:20px;">
                 <div class="jumbotron">
-                    <h1 class="display-4">Silakan Login!</h1>
-                    <p class="lead">Untuk Mengetahui Info Selengkapnya</p>
-                    <hr class="my-4">
                     <form action="" method="post">
-                        <div class="form-group">
-                            <label for="">Email</label>
-                            <input type="email" class="form-control" name="email" value="" id="email" required>
-                            <label for="">Password</label>
-                            <input type="password" class="form-control" name="pass" value="" id="pass" required><br><br>
-                            <button class="btn btn-outline-success my-2 my-sm-0" type="submit" name="Akses">Login</button>
-                        </div>
+
+                    <?php
+                        if (isset($_POST['bayar1'])) {
+                            $bayar = $_POST['bayar'];
+                            $total = $_POST['irsyal'];
+                            $hasil = $bayar-$total;
+                        }
+                    ?>
+                    <h1 class="display-4">Terimakasih</h1>
+                    <p class="lead">Kembalian nya : Rp. <?php echo number_format($hasil, 2, ',', '.') ?></p>
+                    <hr class="my-4">
+                    <p>Apakah anda ingin membeli lagi</p>
+                    <div class="form-group">
                     </form>
+                        <form action="soal_pembelian.php" method="post" >
+                        <button type="submit" name="simpan" class="btn btn-success">Ya</button>
+                        </form><br><br>
+                        <form action="tidak.php" method="post">
+                        <button type="submit" class="btn btn-danger">Tidak</button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="navbar-nav mr-auto"></div>
         <a class="navbar-brand" href="#"></a>
@@ -55,11 +73,7 @@ session_start();
             <span class="navbar-toggler-icon"></span>
         </button>
     </nav>
-    <!-- End Content -->
-
-    <!-- Footer -->
     <!-- End Footer -->
-
     <!-- JS -->
     <!-- Jquery, bebas.js -->
     <script src="assets/js/jquery-3.4.1.min.js"></script>
@@ -69,16 +83,7 @@ session_start();
 </body>
 </html>
 <?php
-    if (isset($_POST['Akses'])) {
-        $a = $_POST['email'];
-        $b = $_POST['pass'];
-        if ($a == "refan@gmail.com" && $b == '882001') {
-            $_SESSION['akseslogin'] = 'Admin';
-            header("location:home.php");
-        }else{
-            echo "Login Gagal";
-        }
-    }elseif (isset($_SESSION['akseslogin'])) {
-         echo "<script> alert('Anda Sudah Login');"." window.location.href='home.php' </script>";
+    }else{
+        echo "<script> alert('Silahkan Login Terlebih dahulu');"." window.location.href='index.php' </script>";
     }
 ?>
